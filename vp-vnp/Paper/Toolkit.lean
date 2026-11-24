@@ -18,20 +18,6 @@ namespace Paper
 
 open Finset Filter Topology Cat
 
-/-- The paper's definition: "A complete metric space is CAT(0) if any two points x, v have a midpoint and (CN) holds
-for it." -/
-theorem cat0_iff (X : Type) [MetricSpace X] : Cat.CN X ↔ CompleteSpace X ∧ ∀ x v : X, ∃ m,
-    dist x m = dist x v / 2 ∧ dist m v = dist x v / 2 ∧
-      ∀ z, dist z m ^ 2 ≤ 1 / 2 * dist z x ^ 2 + 1 / 2 * dist z v ^ 2 - (dist x v / 2) ^ 2 := by
-  constructor
-  · intro h
-    refine ⟨h.toCompleteSpace, fun x v => ⟨Cat.mid x v, Cat.dist_mid_left x v, Cat.dist_mid_right x v, fun z => ?_⟩⟩
-    linarith [Cat.cn x v z]
-  · rintro ⟨hc, h⟩
-    refine { hc with exists_mid := fun x v => ?_ }
-    obtain ⟨m, -, -, hm⟩ := h x v
-    exact ⟨m, fun z => by linarith [hm z]⟩
-
 section Toolkit
 
 variable {Y : Type*} [MetricSpace Y] [CN Y]
