@@ -155,7 +155,7 @@ theorem nds_expand (B : ℕ) (K : KT R) : (K.expand B).nds ≤ K.nds * (2 * B + 
   | leaf c => simp [expand, nds, nds_comb]
   | node l r ihl ihr =>
     simp only [expand, nds]
-    nlinarith
+    linarith
 
 theorem ht_comb (c : R) (n : ℕ) : (comb c n).ht ≤ n := by
   induction n generalizing c with
@@ -218,7 +218,7 @@ theorem nds_budg {J : ℕ} {K : KT R} {q : Bt × R} (h : q ∈ K.budg J) : q.1.n
     have h1 := ihl hp
     have h2 := ihr hq
     simp only [Bt.nds, nds]
-    nlinarith
+    linarith
 
 end KT
 
@@ -403,7 +403,7 @@ theorem gt_ev {J B : ℕ} (x : Tree) (K : KT R) (pre : List Bool)
     obtain ⟨l', e', r'⟩ := node_rel el er rl rr
     refine ⟨l', e', r'.imp fun s q hs => ⟨hs.th, hs.out, hs.bill, hs.names, hs.cost.trans ?_⟩⟩
     simp only [KT.expand, KT.nds]
-    nlinarith
+    linarith
 
 end Formulas
 
@@ -424,7 +424,7 @@ theorem size_gw (ν : ℕ → ℕ) (pre : List Bool) (b N : ℕ) (n j : ℕ) (h 
     have h3 := h j (by omega)
     simp only [KT.pw, List.length_append, List.length_replicate, List.length_singleton] at h2
     simp only [gw, gbit, Fm.code, Tree.size, size_num, KT.pw]
-    nlinarith
+    linarith
 
 theorem size_gcomb (ν : ℕ → ℕ) (J : ℕ) (pre : List Bool) (N : ℕ) (n b : ℕ) (h : ∀ i < b + n + J, ν i ≤ N) :
     (gcomb ν J pre b n).code.size ≤ n * ((J + 1) * (4 * (pre.length + N) + 100)) + 4 := by
@@ -434,7 +434,7 @@ theorem size_gcomb (ν : ℕ → ℕ) (J : ℕ) (pre : List Bool) (N : ℕ) (n b
     have h1 := ih (b + 1) (fun i hi => h i (by omega))
     have h2 := size_gw ν pre b N J 0 (fun i hi => h _ (by omega))
     simp only [gcomb, Fm.code, Tree.size, size_num]
-    nlinarith
+    linarith
 
 theorem size_gt (ν : ℕ → ℕ) (J B : ℕ) (K : KT R) (pre : List Bool) (N : ℕ) (h : ∀ i < B + J, ν i ≤ N) :
     (gt ν J B K pre).code.size ≤ (K.expand B).nds * ((J + 1) * (4 * (pre.length + K.ht + N) + 100)) := by
@@ -447,7 +447,7 @@ theorem size_gt (ν : ℕ → ℕ) (J B : ℕ) (K : KT R) (pre : List Bool) (N :
     simp only [gt, KT.expand, KT.nds_comb, KT.ht, add_zero] at h1 ⊢
     refine h1.trans ?_
     have : 100 ≤ (J + 1) * (4 * (pre.length + N) + 100) := by nlinarith
-    nlinarith
+    linarith
   | node l r ihl ihr =>
     have h1 := ihl (pre ++ [false])
     have h2 := ihr (pre ++ [true])
@@ -466,7 +466,7 @@ theorem size_gt (ν : ℕ → ℕ) (J B : ℕ) (K : KT R) (pre : List Bool) (N :
     have e3 : 100 ≤ (J + 1) * (4 * (pre.length + (max l.ht r.ht + 1) + N) + 100) := by nlinarith
     have e4 := h1.trans (Nat.mul_le_mul_left _ e1)
     have e5 := h2.trans (Nat.mul_le_mul_left _ e2)
-    nlinarith
+    linarith
 
 end Sizes
 

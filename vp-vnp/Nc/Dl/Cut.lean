@@ -115,27 +115,12 @@ theorem mem_execAll (hK : 0 < K) [Nonempty Q] [Nonempty (Fin U1)] {pt : Fin K �
               if ∀ id, b id ≠ none ↔ id ∈ cutUnits (G.hold0 M.np) (G.hold1 M.np) (grp n o) (P.cur n o E) then
                 (if byPath C.nm (st q ρ n o b) = σ then (1 : ℤ) else 0) else 0
             else 0 else 0 else 0 else 0) = 0 := by
-    refine Finset.sum_eq_zero fun q _ => ?_
-    split_ifs with h1
-    swap
-    · rfl
-    refine Finset.sum_eq_zero fun ρ _ => ?_
-    split_ifs with h2
-    swap
-    · rfl
-    refine Finset.sum_eq_zero fun n _ => ?_
-    split_ifs with h3
-    swap
-    · rfl
-    refine Finset.sum_eq_zero fun o _ => ?_
-    split_ifs with h4
-    swap
-    · rfl
-    refine Finset.sum_eq_zero fun b _ => ?_
-    split_ifs with h5 h6
-    · exact absurd h6 (hz q ρ n o b h1 h2 h3 h4 h5)
-    · rfl
-    · rfl
+    refine Finset.sum_eq_zero fun q _ => ite_eq_right_iff.2 fun h1 => ?_
+    refine Finset.sum_eq_zero fun ρ _ => ite_eq_right_iff.2 fun h2 => ?_
+    refine Finset.sum_eq_zero fun n _ => ite_eq_right_iff.2 fun h3 => ?_
+    refine Finset.sum_eq_zero fun o _ => ite_eq_right_iff.2 fun h4 => ?_
+    refine Finset.sum_eq_zero fun b _ => ite_eq_right_iff.2 fun h5 => ?_
+    exact if_neg (hz q ρ n o b h1 h2 h3 h4 h5)
   rw [hR] at h
   have hpos : (0 : ℤ) < ((execAll ub (allSteps C tab qn hU0 hU1 i e) (byPath C.nm (S0 pt))).map
       fun σ' => if σ' = σ then (1 : ℤ) else 0).sum := by

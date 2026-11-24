@@ -630,7 +630,7 @@ theorem lem_angle_projections {G₁ G₂ Z : Type} [Group G₁] [Fintype G₁] [
     have e2 : (τ * β) ^ 2 = c ^ 2 * (σ * α) ^ 2 := by rw [e1]; ring
     have e3 : (τ * β) ^ 2 = c * (σ * α) * (τ * β) := by rw [sq, ← e1]
     have h7 : (σ * τ) * (α ^ 2 + β ^ 2 - dist a a' ^ 2) ≤ (σ * τ) * (2 * c * (α * β)) := by
-      nlinarith
+      linarith
     linarith [le_of_mul_le_mul_left h7 (by positivity)]
   refine angle_num (α := α) (β := β) (A := dist z v ^ 2) hr hr' hα hβ (by linarith) (by linarith) hQ ?_
   -- Lemma lem:toolkit (a) twice, for the points at η on [a,a′] and at t on [z,v]
@@ -688,7 +688,7 @@ theorem thm_poincare_far {h : ℕ} {Z : Type} [MetricSpace Z] [Cat.CN Z] (A : Is
   · rw [← hr]
     have : 2 * (ε / (2 * r + 1)) * r ≤ ε := by
       rw [mul_div_assoc', div_mul_eq_mul_div, div_le_iff₀ (by positivity)]
-      nlinarith
+      linarith
     linarith
 
 section Poincare
@@ -724,7 +724,7 @@ theorem thm_poincare_pairs (hμ : 2 ≤ μ) (hs : 1 ≤ s) (hsm : s ^ 2 < μ) (h
     · have h3 : a.1 * u + 3 * u ≤ h := by
         have := hwin b
         rw [hb] at this
-        nlinarith
+        linarith
       have h1 := lem_angle A hμ hs hsm hA hu h3 hζ hC hζ1 hcζ hc0 z
       rw [show a.1 * u + u = b.1 * u by rw [hb]; ring] at h1
       have h2 : 2 * c * (dist z (Q a z) * dist z (Q b z)) ≤

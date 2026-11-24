@@ -99,7 +99,7 @@ theorem prop_flat_rate_lengths {k : ℕ} (hk : 1 ≤ k) (A : Finset (Fin k)) (h1
     calc (k : ℝ) * ((k : ℝ) - 1) * γ ^ 2 = (γ ^ 2 * k) * ((k : ℝ) - 1) := by ring
       _ = 4 / 81 * ((k : ℝ) - 1) := by rw [this]
       _ ≤ _ := by linarith
-  nlinarith
+  linarith
 
 
 /-- The place of an end: (a, b), a < b, at ½e_a and (b, a) at −½e_a. -/
@@ -136,12 +136,12 @@ theorem rate_numbers14 {k ℓ c ε S1 S2 S3 G lg : ℝ} (hk : 1 ≤ k) (hℓ : 1
     have a2 := mul_le_mul_of_nonneg_left hh hℓ0
     have a3 := mul_le_mul_of_nonneg_right hm hlg
     have a4 := mul_le_mul_of_nonneg_left hg hk0.le
-    nlinarith
+    linarith
   have e1 : k * k * ε = k / 1000 := by rw [hε]; field_simp
   have e2 : k * ε = 1 / 1000 := by rw [hε]; field_simp
   have b1 : ℓ * (k * (k - 1) * ε * (3 / 2)) ≤ ℓ * (3 * k / 2000) := by
     refine mul_le_mul_of_nonneg_left ?_ hℓ0
-    nlinarith
+    linarith
   have b2 : k * (√k + ε) ≤ ℓ * k * (1 / 100 + 1 / 10000) := by
     have : k * √k * 100 ≤ ℓ * k := by nlinarith
     nlinarith
@@ -155,7 +155,7 @@ theorem rate_numbers14 {k ℓ c ε S1 S2 S3 G lg : ℝ} (hk : 1 ≤ k) (hℓ : 1
     linarith
   have h6 := h4.trans (mul_le_mul_of_nonneg_right h5 hlg)
   rw [div_mul_eq_mul_div, le_div_iff₀ hs0] at h6
-  nlinarith
+  linarith
 
 /-- What Lemma lem:few gives: for some balanced set the choice costs k times the price of the unit tensor on all
 ends, and the set what its hubs cost. -/
@@ -404,7 +404,7 @@ theorem rate_of_projection (κ : ℕ) : ∃ m₀ : ℕ, ∀ P : ℕ → ℕ → 
     calc (16 : ℝ) = 2 ^ 4 := by norm_num
       _ ≤ _ := pow_le_pow_left₀ (by norm_num) hrR 4
   rw [← Real.lt_logb_iff_rpow_lt (by norm_num) hs0, div_lt_iff₀ (by norm_num)]
-  nlinarith
+  linarith
 
 /-- **Paper: Theorem thm:flat-rate.** "In the flat case there is m₀ such that for m ≥ m₀ every circuit over k for PERM_m
 has more than 2^((log m)^(4/3)/1600²) gates." -/

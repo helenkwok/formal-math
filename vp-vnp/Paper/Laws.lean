@@ -265,7 +265,7 @@ theorem thm_laws_over_field {K : Type} [Field K] {h : ℕ} [NeZero h] (h2 : 2 �
   obtain ⟨ε, hε, hεZ⟩ : ∃ ε : ℝ, 0 < ε ∧ ε * Z₂ ≤ (a : ℝ) / 4 := by
     refine ⟨(a : ℝ) / (4 * (Z₂ + 1)), by positivity, ?_⟩
     rw [div_mul_eq_mul_div, div_le_div_iff₀ (by positivity) (by norm_num)]
-    nlinarith
+    linarith
   choose q₀ hq₀ using fun t : Loads α ((a : ℝ) + Z₁) =>
     thm_laws_cover (K := K) ea eb cNear dNear t.1 (fun ld : Loads β (c * ((a : ℝ) + Z₁) + Z₂) => ld.1) (hmax t) hε
   set q := ∑ t, q₀ t + 1 with hq
@@ -415,7 +415,7 @@ theorem thm_laws_over_field {K : Type} [Field K] {h : ℕ} [NeZero h] (h2 : 2 �
       calc c * Z₁ + Z₂ ≤ c * Z₁ + c * Z₂ := by gcongr; exact le_mul_of_one_le_left hZ₂0 hc1
         _ = c * (Z₁ + Z₂) := by ring
         _ ≤ _ := mul_le_mul_of_nonneg_left (by linarith) (by linarith)
-    nlinarith [mul_le_mul_of_nonneg_left h5 (show (0 : ℝ) ≤ q by positivity)]
+    linarith [mul_le_mul_of_nonneg_left h5 (show (0 : ℝ) ≤ q by positivity)]
 
 /-- **Paper: Theorem thm:laws.** "There are a finitely generated subring A of k, a positive integer a₁, and finitely
 many laws over A such that (a) for every load n and t ∈ ℕ with ‖n‖ ≤ a₁t some law has n ≤ tσ; (b) for every law and

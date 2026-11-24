@@ -327,7 +327,7 @@ theorem lem_means_estimate (hN : Cat.Len N) (hh : Cat.Homog N) (a b p q c e : �
       rw [abs_mul]
       exact mul_le_mul hA hx (abs_nonneg _) (by positivity)
     have h3 := (abs_le.1 h2).1
-    nlinarith
+    linarith
   have sq : ∀ (Z c : ℤ × ℤ), N c ≤ κ → |N Z - M * N c| ≤ 2 * R * κ →
       1 / (2 * M) * N Z ^ 2 ≤ M * N c ^ 2 / 2 + 4 * R * κ ^ 2 := by
     intro Z c hc hZ
@@ -339,9 +339,9 @@ theorem lem_means_estimate (hN : Cat.Len N) (hh : Cat.Homog N) (a b p q c e : �
         exact mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_right hc hκ0) (by positivity)
       have h6 : (R : ℝ) * R * κ ^ 2 ≤ M * R * κ ^ 2 :=
         mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_right hR' hR0) (sq_nonneg _)
-      nlinarith
+      linarith
     rw [div_mul_eq_mul_div, one_mul, div_le_iff₀ (by positivity)]
-    nlinarith
+    linarith
   have l1 := low _ _ _ hp hxp
   have l2 := low _ _ _ hq hxq
   have s1 := sq _ _ hc hp

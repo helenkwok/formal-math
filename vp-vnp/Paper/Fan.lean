@@ -715,7 +715,7 @@ theorem thm_cn_ii (hd : ∀ n, IsFan K w x m z D T (max n 1) (d n)) (hT : 2 ≤ 
       have h4 : θ ^ 2 * D ^ 2 * place n b i k ^ 2 ≤ θ ^ 2 * D ^ 2 * 1 := by
         apply mul_le_mul_of_nonneg_left _ (by positivity)
         nlinarith
-      nlinarith
+      linarith
     rw [mean_add (Bd.const _) (bd_place.smul _), mean_const, mean_smul bd_place, mean_place] at h3
     linarith
   have h3 := (meanNorm_le_meanLength (fanW d T) (1, -1)).trans h1
@@ -902,7 +902,7 @@ theorem thm_cn_iv_mean (hd : ∀ n, IsFan K w x m z D T (max n 1) (d n)) (hT : 2
     apply mul_le_mul_of_nonneg_left _ (by positivity)
     exact mul_le_mul_of_nonneg_left hXm (Nat.cast_nonneg S)
   refine le_trans ?_ h3
-  nlinarith
+  linarith
 
 /-- **Claim (iv)** of the proof of Theorem thm:cn: "N(1,−1−A)² ≥ A²θ²Λ₂ + AθΓ − O(Aθ²)", with
 Γ = |mz|² − ½|xz|² − ½|vz|² and with 4D(D + |zm|) for the constant in O, which depends on neither A nor θ. ("Divide by S²";
@@ -970,7 +970,7 @@ theorem thm_cn_end (hd : ∀ n, IsFan K w x m z D T (max n 1) (d n)) (hT : 2 ≤
     have h1 := s4 A
     have h2 := c2 A
     rw [hΔ]
-    nlinarith
+    linarith
   have hΔ0 : Δ ≤ 0 := by
     by_contra h
     push Not at h
@@ -1002,7 +1002,7 @@ theorem thm_cn {Y : Type} {w : Y → Y → ℝ} (hw : IsPrice K w) (x v m z : Y)
     have h5 := mul_le_mul_of_nonneg_left (thm_cn_Λ₂_le hd) (sq_nonneg (1 / T : ℝ))
     simp only [cond_true, cond_false] at h4
     refine le_of_mul_le_mul_left ?_ hθ0
-    nlinarith
+    linarith
   -- let θ → 0
   have hT : Tendsto (fun T : ℕ => 1 / (T : ℝ) * (D ^ 2 + (D + w z m) ^ 2 + 4 * D * (D + w z m)))
       atTop (𝓝 (0 * (D ^ 2 + (D + w z m) ^ 2 + 4 * D * (D + w z m)))) :=

@@ -167,7 +167,7 @@ theorem interp {H : ℕ} {F : Fm} {x : Tree} {l : List (Run A)} (h : Ev θ F x l
     refine call0 (ih f.tl rfl t ht) fun q hq => ⟨_, Dt.cons (.hd (.hd (.id _))) (.tl (.id _)), ?_⟩
     refine .cons ⟨rfl, mul_one _, rfl, ?_⟩ .nil
     simp only [Run.tick, Run.det]
-    nlinarith
+    linarith
   | @tl a x l h ih =>
     intro f hf t ht
     rcases Fm.ofTree_cases f with ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ |
@@ -177,7 +177,7 @@ theorem interp {H : ℕ} {F : Fm} {x : Tree} {l : List (Run A)} (h : Ev θ F x l
     refine call0 (ih f.tl rfl t ht) fun q hq => ⟨_, Dt.cons (.tl (.hd (.id _))) (.tl (.id _)), ?_⟩
     refine .cons ⟨rfl, mul_one _, rfl, ?_⟩ .nil
     simp only [Run.tick, Run.det]
-    nlinarith
+    linarith
   | @cons a b x la lb ha hb iha ihb =>
     intro f hf t ht
     rcases Fm.ofTree_cases f with ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ |
@@ -198,7 +198,7 @@ theorem interp {H : ℕ} {F : Fm} {x : Tree} {l : List (Run A)} (h : Ev θ F x l
     · simp [Run.det, Run.seq, Run.tick, s1, u1]
     · simp [Run.det, s2, u2]
     · simp only [Run.det, Run.seq, Run.tick]
-      nlinarith
+      linarith
   | @ite a b c x la L ha hb hc iha ihb ihc =>
     intro f hf t ht
     rcases Fm.ofTree_cases f with ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ |
@@ -222,7 +222,7 @@ theorem interp {H : ℕ} {F : Fm} {x : Tree} {l : List (Run A)} (h : Ev θ F x l
       · simp [Run.delay, Run.tick, hu.out]
       · have := hu.cost
         simp only [Run.delay, Run.seq, Run.tick]
-        nlinarith
+        linarith
     · obtain ⟨l2, e2, r2⟩ := ihb q.1 (mem_simS hq).1 hq0 f.tl.tl.hd rfl q.2 hqt
       refine ⟨_, Ev.ite_true hv hq0 (rec_ev hy (.hd (.tl (Dt.fA hy))) (Dt.fX hy) ht' e2), ?_⟩
       rw [List.forall₂_map_left_iff, List.forall₂_map_left_iff, List.forall₂_map_right_iff]
@@ -232,7 +232,7 @@ theorem interp {H : ℕ} {F : Fm} {x : Tree} {l : List (Run A)} (h : Ev θ F x l
       · simp [Run.delay, Run.tick, hu.out]
       · have := hu.cost
         simp only [Run.delay, Run.seq, Run.tick]
-        nlinarith
+        linarith
   | @run a b x la lb L ha hb hL iha ihb ih =>
     intro f hf t ht
     rcases Fm.ofTree_cases f with ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ |
@@ -271,7 +271,7 @@ theorem interp {H : ℕ} {F : Fm} {x : Tree} {l : List (Run A)} (h : Ev θ F x l
     · simp [Run.delay, Run.seq, Run.tick, hv.out]
     · have := hv.cost
       simp only [Run.delay, Run.seq, Run.tick, Function.comp_apply]
-      nlinarith
+      linarith
   | guess x =>
     intro f hf t ht
     rcases Fm.ofTree_cases f with ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ |
@@ -307,7 +307,7 @@ theorem interp {H : ℕ} {F : Fm} {x : Tree} {l : List (Run A)} (h : Ev θ F x l
     refine .cons ⟨rfl, ?_, rfl, ?_⟩ .nil
     · simp [Run.seq, Run.tick, Run.det]
     · simp only [Run.seq, Run.tick, Run.det]
-      nlinarith
+      linarith
   | @mul a x l h ih =>
     intro f hf t ht
     rcases Fm.ofTree_cases f with ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ | ⟨h1, h2⟩ |
@@ -350,6 +350,6 @@ theorem interp {H : ℕ} {F : Fm} {x : Tree} {l : List (Run A)} (h : Ev θ F x l
       · simp [Run.det]
       · simp only [Run.det]
         have : 60 * q.2.ht + 420 ≤ MM H := by unfold MM; omega
-        nlinarith
+        linarith
 
 end NS1
