@@ -343,14 +343,14 @@ theorem prop_crossing_spectral {p q : ℝ} (hp : 0 ≤ p) (hq : 0 ≤ q) {I : Ty
     have e1 := F.e_le_one a b
     have h3 := mul_le_mul_of_nonneg_right h e0
     have h4 : δ / 8 * s * F.e a b ≤ δ / 8 * s := mul_le_of_le_one_right (by positivity) e1
-    nlinarith
+    linarith
   have lo : ∀ (a b : I) {Z c : ℝ}, c * s - δ / 8 * s ≤ Z → (c * F.e a b - δ / 8) * s ≤ Z * F.e a b := by
     intro a b Z c h
     have e0 := F.e_nonneg a b
     have e1 := F.e_le_one a b
     have h3 := mul_le_mul_of_nonneg_right h e0
     have h4 : δ / 8 * s * F.e a b ≤ δ / 8 * s := mul_le_of_le_one_right (by positivity) e1
-    nlinarith
+    linarith
   have b1 := lo x v (Z := A) (c := p) (by linarith)
   have b2 := lo y u (Z := B) (c := q) (by linarith)
   rw [← min_add_add_right]
@@ -363,7 +363,7 @@ theorem prop_crossing_spectral {p q : ℝ} (hp : 0 ≤ p) (hq : 0 ≤ q) {I : Ty
     have c5 := hi o o' (Z := Real.log (R j)) (c := r) (by linarith)
     refine le_of_mul_le_mul_right ?_ hs
     simp only
-    nlinarith
+    linarith
   · have hj1 := hj.trans (add_le_add le_rfl (min_le_right _ _))
     have c1 := hi x w (Z := A) (c := p) (by linarith)
     have c2 := hi u w (Z := B) (c := q) (by linarith)
@@ -372,7 +372,7 @@ theorem prop_crossing_spectral {p q : ℝ} (hp : 0 ≤ p) (hq : 0 ≤ q) {I : Ty
     have c5 := hi w w' (Z := Real.log (L j)) (c := l) (by linarith)
     refine le_of_mul_le_mul_right ?_ hs
     simp only
-    nlinarith
+    linarith
 
 /-- Proposition prop:crossing, the first statement. "Pull the price back to eight distinct points; this covers coincidences. Both
 inequalities are homogeneous in the distances, and the pairs (r, l) lie in a compact set, so they pass to limits." -/
@@ -452,13 +452,13 @@ theorem prop_crossing {Y : Type} {d : Y → Y → ℝ} (hd : IsPrice K d) (x v y
     have e : τ / 2 * a ^ 2 + b ^ 2 / (2 * τ) - a * b = (τ * a - b) ^ 2 / (2 * τ) := by
       field_simp
       ring
-    nlinarith [div_nonneg (sq_nonneg (τ * a - b)) (by positivity : (0 : ℝ) ≤ 2 * τ)]
+    linarith [div_nonneg (sq_nonneg (τ * a - b)) (by positivity : (0 : ℝ) ≤ 2 * τ)]
   have a1 := am r (d o o')
   have a2 := am l (d w w')
   have a3 : τ / 2 * (r ^ 2 + l ^ 2) ≤ τ / 2 * (2 * (p ^ 2 + q ^ 2)) :=
     mul_le_mul_of_nonneg_left hrl (by positivity)
   rw [add_div]
-  nlinarith
+  linarith
 
 /-- **Paper: display eq:Q.** "In particular, for every τ > 0, 2(p|xv| + q|yu|) ≤ p(|xo| + |vo′| + |xw| + |vw′|) +
 q(|yo| + |uo′| + |uw| + |yw′|) + τ(p² + q²) + (|oo′|² + |ww′|²)/(2τ)." This is the second statement of Proposition prop:crossing. -/

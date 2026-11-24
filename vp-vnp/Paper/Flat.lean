@@ -462,7 +462,7 @@ theorem prop_flat_lower_lengths {k : ℕ} (hk : 1 ≤ k) (A : Finset (Fin k)) (h
     have e2 : 2 / 3 * k * √k ≤ √(2 * qnum A) := by
       refine Real.le_sqrt_of_sq_le ?_
       rw [mul_pow, mul_pow, Real.sq_sqrt hk0.le]
-      nlinarith
+      linarith
     calc (k : ℝ) / 9 = η * (2 / 3 * k * √k) := by
           rw [hη]
           have : √(k : ℝ) ≠ 0 := by positivity
@@ -474,7 +474,7 @@ theorem prop_flat_lower_lengths {k : ℕ} (hk : 1 ≤ k) (A : Finset (Fin k)) (h
     have : (k : ℝ) * (k - 1) * (1 / (36 * k)) = (k - 1) / 36 := by field_simp
     rw [this]
     linarith
-  nlinarith
+  linarith
 
 /-- The end (a, b) or (b, a) of a pair. -/
 noncomputable def lowerPos {k : ℕ} (a : End k) : EuclideanSpace ℝ (Fin k) :=
@@ -597,7 +597,7 @@ theorem thm_flat_simple {K : Type} [Field K] (hK : Flat K) (h2 : (2 : K) ≠ 0) 
   have hle : ∀ ℓ, ℓ ≤ size ℓ := fun ℓ => by
     show ℓ ≤ 3 * k ^ 3 * ℓ * 2 ^ (k * ℓ)
     calc ℓ = 1 * ℓ * 1 := by simp
-      _ ≤ _ := Nat.mul_le_mul (Nat.mul_le_mul_right _ (by nlinarith [Nat.one_le_pow 3 k (by omega)])) Nat.one_le_two_pow
+      _ ≤ _ := Nat.mul_le_mul (Nat.mul_le_mul_right _ (by linarith [Nat.one_le_pow 3 k (by omega)])) Nat.one_le_two_pow
   obtain ⟨ℓ, hℓd⟩ : ∃ ℓ, ℓ = Nat.findGreatest (fun ℓ => size ℓ ≤ m) m := ⟨_, rfl⟩
   have hℓ1 : ℓ₁ ≤ ℓ := hℓd ▸ Nat.le_findGreatest ((hle ℓ₁).trans hm) hm
   have hℓm : size ℓ ≤ m := by
@@ -634,6 +634,6 @@ theorem thm_flat_simple {K : Type} [Field K] (hK : Flat K) (h2 : (2 : K) ≠ 0) 
   push_cast at h4
   have hkl : (3 : ℝ) ≤ (k : ℝ) * ℓ := by
     exact_mod_cast (le_trans hk3 (Nat.le_mul_of_pos_right k (by omega)) : 3 ≤ k * ℓ)
-  nlinarith [mul_nonneg (show (0 : ℝ) ≤ (k : ℝ) * ℓ by linarith) (Nat.cast_nonneg C)]
+  linarith [mul_nonneg (show (0 : ℝ) ≤ (k : ℝ) * ℓ by linarith) (Nat.cast_nonneg C)]
 
 end Paper

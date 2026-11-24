@@ -44,10 +44,10 @@ theorem dist_mid_left (x v : X) : dist x (mid x v) = dist x v / 2 := by
   rw [dist_comm (mid x v) v] at h3
   have ha : dist x (mid x v) ≤ dist x v / 2 := by
     apply abs_le_of_sq_le_sq' _ (by positivity) |>.2
-    nlinarith
+    linarith
   have hb : dist v (mid x v) ≤ dist x v / 2 := by
     apply abs_le_of_sq_le_sq' _ (by positivity) |>.2
-    nlinarith
+    linarith
   linarith
 
 theorem dist_mid_right (x v : X) : dist (mid x v) v = dist x v / 2 := by
@@ -58,7 +58,7 @@ theorem dist_mid_right (x v : X) : dist (mid x v) v = dist x v / 2 := by
   rw [dist_comm (mid x v) v] at h3 ⊢
   have hb : dist v (mid x v) ≤ dist x v / 2 := by
     apply abs_le_of_sq_le_sq' _ (by positivity) |>.2
-    nlinarith
+    linarith
   linarith
 
 end min
@@ -123,10 +123,10 @@ theorem IsPt.dist_left {x v b : X} {t : ℝ} (h0 : 0 ≤ t) (h1 : t ≤ 1) (h : 
   rw [dist_comm b v] at h4
   have ha : dist x b ≤ t * dist x v := by
     apply abs_le_of_sq_le_sq' _ (mul_nonneg h0 dist_nonneg) |>.2
-    nlinarith
+    linarith
   have hb : dist v b ≤ (1 - t) * dist x v := by
     apply abs_le_of_sq_le_sq' _ (mul_nonneg (by linarith) dist_nonneg) |>.2
-    nlinarith
+    linarith
   linarith
 
 theorem IsPt.symm {x v b : X} {t : ℝ} (h : IsPt x v t b) : IsPt v x (1 - t) b := by
@@ -145,7 +145,7 @@ theorem IsPt.eq_of_dist {x v b b' : X} {t : ℝ} (h : IsPt x v t b)
     (h2 : dist x b' = t * dist x v) (h3 : dist b' v = (1 - t) * dist x v) : b' = b := by
   have h4 := h b'
   rw [dist_comm b' x, h2, h3] at h4
-  have h5 : dist b' b ^ 2 ≤ 0 := by nlinarith
+  have h5 : dist b' b ^ 2 ≤ 0 := by linarith
   exact dist_eq_zero.1 (pow_eq_zero_iff two_ne_zero |>.1 (le_antisymm h5 (sq_nonneg _)))
 
 theorem le_two_mul_of_forall {S a b : ℝ} (ha : 0 ≤ a) (hb : 0 ≤ b)
@@ -157,7 +157,7 @@ theorem le_two_mul_of_forall {S a b : ℝ} (ha : 0 ≤ a) (hb : 0 ≤ b)
     have h1 := h (S / (2 * (b ^ 2 + 1))) (by positivity)
     have h2 : S / (2 * (b ^ 2 + 1)) * b ^ 2 ≤ S / 2 := by
       rw [div_mul_eq_mul_div, div_le_div_iff₀ (by positivity) (by positivity)]
-      nlinarith
+      linarith
     simp at h1
     linarith
   rcases hb.eq_or_lt with rfl | hb
@@ -167,7 +167,7 @@ theorem le_two_mul_of_forall {S a b : ℝ} (ha : 0 ≤ a) (hb : 0 ≤ b)
     have h1 := h (2 * (a ^ 2 + 1) / S) (by positivity)
     have h2 : a ^ 2 / (2 * (a ^ 2 + 1) / S) ≤ S / 2 := by
       rw [div_div_eq_mul_div, div_le_div_iff₀ (by positivity) (by positivity)]
-      nlinarith
+      linarith
     have h3 : 2 * (a ^ 2 + 1) / S * (0 : ℝ) ^ 2 = 0 := by ring
     linarith
   · have h1 := h (a / b) (by positivity)

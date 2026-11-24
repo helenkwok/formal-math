@@ -79,7 +79,7 @@ theorem lem_toolkit_minimization (C : Set Y) (hC : IsClosed C) (hne : C.Nonempty
       have h2 := hconv b hbC y hy
       rw [dist_comm _ b, dist_mid_left] at h1
       rw [dist_comm y b, pow_succ]
-      nlinarith
+      linarith
   intro y hy
   have h1 : Tendsto (fun k : ℕ => Θ b + c * (1 - (1 / 2 : ℝ) ^ k) * dist y b ^ 2) atTop
       (𝓝 (Θ b + c * (1 - 0) * dist y b ^ 2)) := by
@@ -140,7 +140,7 @@ theorem lem_toolkit_a (x v : Y) (t : ℝ) (h0 : 0 ≤ t) (h1 : t ≤ 1) : ∃ γ
       apply mul_le_mul_of_nonneg_left _ (mul_nonneg h0 (by linarith))
       exact pow_le_pow_left₀ dist_nonneg h2 2
     have h4 : 0 ≤ ((1 - t) * dist b x - t * dist b v) ^ 2 := sq_nonneg _
-    nlinarith
+    linarith
   exact ⟨b, ⟨hpt.dist_left h0 h1, hpt.dist_right h0 h1⟩, fun _ e1 e2 => hpt.eq_of_dist e1 e2, hpt⟩
 
 /-- Part (a) in the words of the library. -/
@@ -170,7 +170,7 @@ theorem lem_toolkit_b_box (x v p p' : Y) {s t : ℝ} (hs0 : 0 ≤ s) (hs1 : s �
     mul_le_mul_of_nonneg_left (pow_le_pow_left₀ dist_nonneg h3 2)
       (mul_nonneg ht0 (by linarith))
   have h5 : 0 ≤ ((1 - t) * dist x q - t * dist v q) ^ 2 := sq_nonneg _
-  nlinarith
+  linarith
 
 /-- The second step of the proof of part (b), the choice of the parameter: it gives the first inequality of (b), here as
 |x₁x₃|² + |x₂x₄|² ≤ |x₁x₂|² + |x₃x₄|² + 2|x₂x₃||x₁x₄|. -/
@@ -214,13 +214,13 @@ theorem lem_toolkit_b (x v y u : Y) :
     linarith
   have h2 : dist x v ^ 2 + dist y u ^ 2 ≤ dist x y ^ 2 + dist v u ^ 2 + 2 * dist y v * dist x u :=
     lem_toolkit_b_first x y v u
-  refine ⟨h1, by nlinarith [sq_nonneg (dist y v - dist x u)], fun he => ⟨?_, ?_⟩⟩
+  refine ⟨h1, by linarith [sq_nonneg (dist y v - dist x u)], fun he => ⟨?_, ?_⟩⟩
   · have h3 : (dist x y - dist v u) ^ 2 ≤ 0 := by
       rw [dist_comm u v] at h1
-      nlinarith
+      linarith
     have h4 := pow_eq_zero_iff two_ne_zero |>.1 (le_antisymm h3 (sq_nonneg _))
     linarith
-  · have h3 : (dist y v - dist x u) ^ 2 ≤ 0 := by nlinarith
+  · have h3 : (dist y v - dist x u) ^ 2 ≤ 0 := by linarith
     have h4 := pow_eq_zero_iff two_ne_zero |>.1 (le_antisymm h3 (sq_nonneg _))
     linarith
 
@@ -246,7 +246,7 @@ theorem lem_toolkit_c_contract {ι : Type*} [Fintype ι] {w : ι → ℝ} (hw : 
   simp only [Finset.sum_add_distrib] at h5
   rw [← Finset.mul_sum] at h5
   have h6 : dist b b' * ((∑ i, w i) * dist b b') ≤
-      dist b b' * ∑ i, w i * dist (x i) (x' i) := by nlinarith
+      dist b b' * ∑ i, w i * dist (x i) (x' i) := by linarith
   exact le_of_mul_le_mul_left h6 h0
 
 /-- **Paper: Lemma lem:toolkit (c).** "Points x₁, …, x_n, n ≥ 1, have a barycenter b, the minimizer of y ↦ ∑|yx_i|², with
@@ -357,7 +357,7 @@ theorem lem_toolkit_f_parts {x u v y a b : Y} {h δ s t : ℝ} (hp : dist x u = 
   rw [e1, e4] at f2
   rw [e2, e3] at f3
   rw [e2, e4, hq] at f4
-  nlinarith
+  linarith
 
 /-- The case s = t: then |ab| = δ, and |xb|² and |ay|² have the values that the inequality of (a) allows at most. -/
 theorem lem_toolkit_f_same {x u v y a b : Y} {h δ s : ℝ} (hp : dist x u = h) (hp' : dist y v = h)
@@ -373,7 +373,7 @@ theorem lem_toolkit_f_same {x u v y a b : Y} {h δ s : ℝ} (hp : dist x u = h) 
   rw [hp] at e1
   rw [hp'] at e3
   rw [dist_comm b y, e1, e3, hq'] at h2
-  have h3 : (dist a b - δ) ^ 2 ≤ 0 := by nlinarith
+  have h3 : (dist a b - δ) ^ 2 ≤ 0 := by linarith
   have h4 : dist a b = δ := by
     have : dist a b - δ = 0 := pow_eq_zero_iff two_ne_zero |>.1 (le_antisymm h3 (sq_nonneg _))
     linarith
@@ -387,7 +387,7 @@ theorem lem_toolkit_f_same {x u v y a b : Y} {h δ s : ℝ} (hp : dist x u = h) 
   have h8 : dist x v ^ 2 + dist u y ^ 2 = 2 * h ^ 2 + 2 * δ ^ 2 := le_antisymm (by linarith) hd
   have h9 : s * dist x v ^ 2 + s * dist u y ^ 2 = s * (2 * h ^ 2 + 2 * δ ^ 2) := by
     rw [← mul_add, h8]
-  refine ⟨h4, ?_, ?_⟩ <;> nlinarith
+  refine ⟨h4, ?_, ?_⟩ <;> linarith
 
 /-- The values of |xb|² and |ay|² from lem_toolkit_f_same, inserted into lem_toolkit_f_parts: the formula for |ab|², still in
 terms of the two diagonals. -/

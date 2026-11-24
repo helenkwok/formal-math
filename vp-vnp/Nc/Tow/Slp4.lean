@@ -78,7 +78,15 @@ theorem mem_cur (u : Un R FL Pl U0 U1) :
   · unfold Plan.seenAt
     rw [mem_union, mem_biUnion]
     rcases u with ⟨a, c, k⟩ | ⟨ν, k⟩
-    · simp [seen0, newUnits, SeenU]
+    · constructor
+      · rintro (h1 | ⟨x', -, h2⟩)
+        · simp only [seen0, mem_filter, mem_univ, true_and, decide_eq_true_eq] at h1
+          exact h1
+        · simp only [newUnits, mem_filter, mem_univ, true_and, Bool.false_eq_true] at h2
+      · intro h1
+        refine Or.inl (mem_filter.2 ⟨mem_univ _, ?_⟩)
+        simp only [decide_eq_true_eq]
+        exact h1
     · constructor
       · rintro (h1 | ⟨x', -, h2⟩)
         · simp [seen0] at h1
