@@ -231,7 +231,7 @@ theorem py_good (ha : After (nX nI) (oX oI) lhat H) (mv : Mv T R ch FL) :
 theorem units_stage (hS : SY inp Y p c H) (ha : After (nX nI) (oX oI) lhat H) :
     ∃ H', SY inp Y p (c + 9) H' ∧ H ⊆ H' ∧ Units nI oI lhat TM H' := by
   have hY := hA.pos
-  have hun : Fintype.card (Un R FL Pl U0 U1) ≤ Y ^ 1 := by simpa using hB2.un
+  have hun : Fintype.card (Un R FL Pl U0 U1) ≤ Y ^ 1 := by rw [pow_one]; exact hB2.un
   have hzt : Fintype.card (ZM R FL (ch := ch) × Fin TM) ≤ Y ^ 2 := by
     rw [Fintype.card_prod, Fintype.card_fin, pow_two]
     exact Nat.mul_le_mul hB2.zm hB2.tm
@@ -254,7 +254,7 @@ theorem units_stage (hS : SY inp Y p c H) (ha : After (nX nI) (oX oI) lhat H) :
   have a3 := a2.weaken u3
   have c3 : ∀ z u, ind (fun x => u ∈ consM R FL Pl lhat (nI x) (oI x) z) ∈ H3 := fun z u => f3 (z, u)
   obtain ⟨H4, s4, u4, f4⟩ := s3.add hA (κ := ZM R FL (ch := ch))
-    (fun z x => (consM R FL Pl lhat (nI x) (oI x) z).card) (a := 2) (e := 1) (by simpa using hB2.zm)
+    (fun z x => (consM R FL Pl lhat (nI x) (oI x) z).card) (a := 2) (e := 1) (by rw [pow_one]; exact hB2.zm)
     (fun z => by
       classical
       have e : ∀ x, (consM R FL Pl lhat (nI x) (oI x) z).card =
@@ -291,7 +291,7 @@ theorem units_stage (hS : SY inp Y p c H) (ha : After (nX nI) (oX oI) lhat H) :
     (a := 4) (e := 1) hun (fun u => py_cur hA hB hB2 a6 c6 u) (by omega)
   have a7 := a6.weaken u7
   obtain ⟨H8, s8, u8, f8⟩ := s7.add hA (κ := Mv T R ch FL)
-    (fun mv => ind fun x => GoodMv R ch FL lhat (nX nI x) (oX oI x) mv) (a := 4) (e := 1) (by simpa using hB.mv)
+    (fun mv => ind fun x => GoodMv R ch FL lhat (nX nI x) (oX oI x) mv) (a := 4) (e := 1) (by rw [pow_one]; exact hB.mv)
     (fun mv => py_good hA hB hB2 a7 mv) (by omega)
   obtain ⟨H9, s9, u9, f9⟩ := s8.add hA (κ := Unit)
     (fun _ => ind fun x => ∀ mv, GoodMv R ch FL lhat (nX nI x) (oX oI x) mv) (a := 2) (e := 0) (by simp)

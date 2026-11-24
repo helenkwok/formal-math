@@ -636,7 +636,6 @@ theorem pieces_gain {M q w Λ R X : ℕ} (hq : 0 < q) (hM : 0 < M) (hw : w ^ q �
       _ = _ := by rw [← Real.rpow_add hM0, sub_add_cancel, Real.rpow_one]
   exact_mod_cast h4
 
-set_option maxHeartbeats 1600000 in
 /-- **Paper: Proposition prop:pieces.** "For every tape automaton over A there are constants a, e, C (a and e do not
 depend on the automaton) such that for all large v there is K with v^e ≤ K ≤ Cv^e and the following holds for all
 T ≥ v^a with lg T ≤ (lg v)² and all 2 ≤ k ≤ v^64. Cut an input word of at most KT′ symbols, T′ ≤ T, into K consecutive
@@ -833,7 +832,11 @@ theorem prop_pieces {h : ℕ} [NeZero h] (VL : VLaws A (cNear (h := h)) (dNear (
       _ ≤ _ := by
           refine Nat.mul_le_mul_right _ (Nat.mul_le_mul_right _ ?_)
           rw [hW]
-          nlinarith
+          have hX : 0 < (4 * c + 5) * Ee := Nat.mul_pos (by omega) hEe1
+          calc 2 * (4 * c + 5) * Ee + 1 = 2 * ((4 * c + 5) * Ee) + 1 := by ring
+            _ ≤ 3 * ((4 * c + 5) * Ee) := by omega
+            _ ≤ 18 * (C₀ + 1) * ((4 * c + 5) * Ee) := Nat.mul_le_mul_right _ (by omega)
+            _ = 18 * (C₀ + 1) * (4 * c + 5) * Ee := by ring
   · refine hWC _ ?_
     have h1 := piece_all hn hg hK0 le_rfl (by omega) hk64 hnode hkM g
     have h2 : (K + K) ^ C₀ * k * ub ≤ T := (Nat.mul_le_mul_right _ (Nat.mul_le_mul_left _ hk64)).trans b5
@@ -850,7 +853,13 @@ theorem prop_pieces {h : ℕ} [NeZero h] (VL : VLaws A (cNear (h := h)) (dNear (
       _ ≤ _ := by
           refine Nat.mul_le_mul_right _ (Nat.mul_le_mul_right _ ?_)
           rw [hW]
-          nlinarith [Nat.zero_le (C₀ * c * Ee)]
+          have hX : 0 < (4 * c + 5) * Ee := Nat.mul_pos (by omega) hEe1
+          have h1 : (4 * c + 4) * Ee ≤ (4 * c + 5) * Ee := Nat.mul_le_mul_right _ (by omega)
+          have h2 : C₀ ≤ C₀ * ((4 * c + 5) * Ee) := Nat.le_mul_of_pos_right _ hX
+          calc 8 * C₀ * (4 * c + 5) * Ee + 8 * (4 * c + 4) * Ee + 2 * C₀ =
+              8 * (C₀ * ((4 * c + 5) * Ee)) + 8 * ((4 * c + 4) * Ee) + 2 * C₀ := by ring
+            _ ≤ 18 * (C₀ * ((4 * c + 5) * Ee)) + 18 * ((4 * c + 5) * Ee) := by omega
+            _ = 18 * (C₀ + 1) * (4 * c + 5) * Ee := by ring
   · obtain ⟨-, -, -, -, -, -, d3, d4, d5, -⟩ := TT.computed
     have hMY := hMN.trans (vp (show (e + a' + 2) * C₀ ≤ C by omega))
     refine ⟨?_, ?_, d3.trans hMY, d4.trans hMY, b6.trans (vp (by omega)), d5.trans hMY⟩

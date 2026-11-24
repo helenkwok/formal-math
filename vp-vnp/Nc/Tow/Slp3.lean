@@ -189,7 +189,7 @@ theorem pick_stage (hS : SY inp Y p c H) (hm : ∀ τ, (fun x => L x τ) ∈ H) 
     (fun l => py_pick hA hB m3 f3 l) (by omega)
   have m4 : ∀ τ, (fun x => L x τ) ∈ H4 := fun τ => u4 (m3 τ)
   obtain ⟨H5, s5, u5, f5⟩ := s4.add hA (κ := Mv T R ch FL) (fun mv x => numF R ch FL (L x) mv) (a := 2) (e := 1)
-    (by simpa using hB.mv) (fun mv => cy_numF hA hB hb hL m4 (fun j i => u4 (u3 (f2 (j, i)))) (fun l => u4 (f3 l)) f4 mv)
+    (by rw [pow_one]; exact hB.mv) (fun mv => cy_numF hA hB hb hL m4 (fun j i => u4 (u3 (f2 (j, i)))) (fun l => u4 (f3 l)) f4 mv)
     (by omega)
   exact ⟨H5, s5, u1.trans (u2.trans (u3.trans (u4.trans u5))), fun j i => u5 (u4 (u3 (f2 (j, i)))),
     fun l => u5 (u4 (f3 l)), fun l => u5 (f4 l), f5⟩
@@ -208,7 +208,7 @@ theorem num_stage (hS : SY inp Y p c H) (hs : Stat nx ox lhat H) (t : ℕ) :
   induction t with
   | zero =>
     obtain ⟨H1, s1, u1, f1⟩ := hS.add hA (κ := Mv T R ch FL) (fun mv x => numS R ch FL lhat (nx x) (ox x) 0 mv)
-      (a := 0) (e := 1) (by simpa using hB.mv) (fun mv => CY.const 0 hA.zero_lt) (by omega)
+      (a := 0) (e := 1) (by rw [pow_one]; exact hB.mv) (fun mv => CY.const 0 hA.zero_lt) (by omega)
     exact ⟨H1, s1, u1, f1⟩
   | succ t ih =>
     obtain ⟨H0, s0, u0, f0⟩ := ih
@@ -216,7 +216,7 @@ theorem num_stage (hS : SY inp Y p c H) (hs : Stat nx ox lhat H) (t : ℕ) :
     obtain ⟨H2, s2, u2, f2⟩ := pick_stage hA hB hb
       (fun x τ => ld_le (hR.n x) (hR.o x) _ τ) s1 g1
     obtain ⟨H3, s3, u3, f3⟩ := s2.add hA (κ := Mv T R ch FL)
-      (fun mv x => numS R ch FL lhat (nx x) (ox x) (t + 1) mv) (a := 0) (e := 1) (by simpa using hB.mv)
+      (fun mv x => numS R ch FL lhat (nx x) (ox x) (t + 1) mv) (a := 0) (e := 1) (by rw [pow_one]; exact hB.mv)
       (fun mv => by
         by_cases ht : timeM R ch FL mv = t
         · refine (CY.base (f2.numF mv) hY).congr fun x => ?_
