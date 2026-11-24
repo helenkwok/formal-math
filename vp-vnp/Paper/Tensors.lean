@@ -28,12 +28,6 @@ section Tensors
 
 variable {J L : Type} [Fintype J] [DecidableEq J] [Fintype L] [DecidableEq L]
 
-/-- "Tensors that are restrictions of each other are identified, so that the product is commutative, with unit the tensor
-1"; it is also associative. -/
-theorem tensor_mul_laws (s t u : Ten K I) :
-    Equi (s * t) (t * s) ∧ Equi (s * t * u) (s * (t * u)) ∧ Equi (1 * t) t ∧ Equi (t * 1) t :=
-  ⟨Equi.mul_comm s t, Equi.mul_assoc s t u, Equi.one_mul t, Equi.mul_one t⟩
-
 /-- "Every nonzero t has 1 as a restriction". -/
 theorem tensor_one_restr [Nonempty I] {t : Ten K I} (ht : ∃ x, t.val x ≠ 0) : Restr 1 t :=
   Restr.one_le ht.choose_spec
@@ -125,25 +119,6 @@ noncomputable def trivialPoint (K : Type) [Field K] (I : Type) [Fintype I] [Deci
           (fun k _ => by split_ifs <;> norm_num) (Finset.mem_univ k)
     · rw [if_neg hs]
       exact Finset.sum_nonneg fun k _ => by split_ifs <;> norm_num
-
-/-- The last example after Definition def:spectral: "φ^s is again a spectral point for 0 < s ≤ 1." -/
-noncomputable def powerPoint (φ : Spec K I) (s : ℝ) (h0 : 0 < s) (h1 : s ≤ 1) : Spec K I where
-  F t := φ.F t ^ s
-  nonneg t := Real.rpow_nonneg (φ.nonneg t) s
-  one := by rw [φ.one, Real.one_rpow]
-  mul a b := by rw [φ.mul, Real.mul_rpow (φ.nonneg a) (φ.nonneg b)]
-  le_sum {κ} _ a b h := by
-    classical
-    refine (Real.rpow_le_rpow (φ.nonneg a) (φ.le_sum a b h) h0.le).trans ?_
-    have key : ∀ S : Finset κ, (∑ k ∈ S, φ.F (b k)) ^ s ≤ ∑ k ∈ S, φ.F (b k) ^ s := by
-      intro S
-      induction S using Finset.induction_on with
-      | empty => simp [Real.zero_rpow h0.ne']
-      | insert k S hk ih =>
-        rw [Finset.sum_insert hk, Finset.sum_insert hk]
-        exact (Real.rpow_add_le_add_rpow (φ.nonneg _) (Finset.sum_nonneg fun _ _ => φ.nonneg _) h0.le h1).trans
-          (by gcongr)
-    exact key Finset.univ
 
 /-- Proof of Lemma lem:exponents: "The function q ↦ φ(⟨q⟩_P) is at least 1, multiplicative and monotone, hence a power of q."
 The unit tensor has a leg at π a for every a; the exponent is Nc.Price.hexp. -/

@@ -18,13 +18,6 @@ open Finset MvPolynomial Nc Nc.Price Nc.CaseI Ov
 
 /-! ### The polynomial of the complete network -/
 
-/-- The polynomial f_{k,ℓ}: the sum over the strings σ on the pairs of the product of the variables x_{a,σ_a}; and as a
-tensor on the ends it is the product of the wires on the pairs. -/
-theorem fkl_eq (F : Type) [Field F] (k ℓ : ℕ) :
-    fkl F k ℓ = ∑ σ : Pr k → Fin ℓ → Bool, ∏ a, X (a, asm (fun e _ => σ e) a) ∧
-      ∀ x : Pr k → Fin 2 → Fin ℓ → Bool, cf univ (fkl F k ℓ) (asm x) = if ∀ e, x e 0 = x e 1 then 1 else 0 :=
-  ⟨rfl, cf_fkl⟩
-
 /-- The other end of a pair. -/
 def pairOf {k : ℕ} (a b : Fin k) (h : b ≠ a) : Pr k :=
   if hab : a < b then ⟨(a, b), hab⟩ else ⟨(b, a), lt_of_le_of_ne (not_lt.1 hab) h⟩
@@ -482,7 +475,6 @@ theorem prop_flat_lower_lengths {k : ℕ} (hk : 1 ≤ k) (A : Finset (Fin k)) (h
     rw [this]
     linarith
   nlinarith
-
 
 /-- The end (a, b) or (b, a) of a pair. -/
 noncomputable def lowerPos {k : ℕ} (a : End k) : EuclideanSpace ℝ (Fin k) :=

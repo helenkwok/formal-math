@@ -19,13 +19,6 @@ namespace Paper
 
 open Finset Matrix Nc.Cross
 
-/-- "Fix sizes μ, ν and energies e₁, e₂, and let Σ₁, Σ₂ be the sets of states with size and energy (μ, e₁), respectively (ν, e₂)":
-the set Nc.Cross.states μ e. -/
-theorem mem_stateClass {μ e : ℕ} (s : Finset ℕ × Finset ℕ) :
-    s ∈ states μ e ↔ s.1.card = μ ∧ s.2.card = μ ∧ ∑ i ∈ s.1, (2 * i + 1) + ∑ j ∈ s.2, (2 * j + 1) = e := by
-  rw [states, mem_filter]
-  exact ⟨fun h => h.2, fun h => ⟨mem_pairs.2 ⟨h.1.trans h.2.1.symm, h.2.2.le⟩, h⟩⟩
-
 section Orth
 
 variable {A : Type*} [CommRing A]
