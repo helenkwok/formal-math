@@ -152,7 +152,7 @@ theorem angle_num {r r' α β Q A c : ℝ} (hr : 0 < r) (hr' : 0 < r') (hα : 0 
   have h4 : r * r' * (α ^ 2 + β ^ 2) ≤ r * r' * (Q + 2 * c * (α * β)) :=
     mul_le_mul_of_nonneg_left (by linarith) (by positivity)
   rw [e9, hN] at h3
-  have h5 : (α * β) * Q ≤ (α * β) * (r ^ 2 + r' ^ 2 + 2 * c * (r * r')) := by nlinarith
+  have h5 : (α * β) * Q ≤ (α * β) * (r ^ 2 + r' ^ 2 + 2 * c * (r * r')) := by nlinarith only [h3, h4]
   exact le_of_mul_le_mul_left h5 (by positivity)
 
 end Nc.Flag

@@ -135,7 +135,7 @@ theorem stat_stage (hS : SY inp Y p c H) (hb : Base nx ox H) :
     (by simp) (fun _ => py_valid hA hB hR hb) (by omega)
   have hb1 := hb.weaken u1
   obtain ⟨H2, s2, u2, f2⟩ := s1.add hA (κ := Tg T m AA) (fun τ x => bt R ch lhat (nx x) τ) (a := 7) (e := 1)
-    (by simpa using hB.tg) (fun τ => cy_bt hA hB hR hb1 (f1 ()) τ) (by omega)
+    (by rw [pow_one]; exact hB.tg) (fun τ => cy_bt hA hB hR hb1 (f1 ()) τ) (by omega)
   have hl : Fintype.card (LMv T FL) ≤ Y := by
     refine (Fintype.card_le_of_injective (fun l : LMv T FL => (Sum.inr l : Mv T R ch FL)) Sum.inr_injective).trans hB.mv
   obtain ⟨H3, s3, u3, f3⟩ := s2.add hA (κ := LMv T FL)
@@ -194,10 +194,10 @@ theorem ld_stage (hS : SY inp Y p c H) (hs : Stat nx ox lhat H) {Nf : Inp → Mv
       (∀ ν : NM R FL (ch := ch), (fun x => alvN R ch FL (ox x) ν (Nf x ν.1)) ∈ H') ∧
       ∀ τ, (fun x => ld R ch FL lhat (nx x) (ox x) (Nf x) τ) ∈ H' := by
   obtain ⟨H1, s1, u1, f1⟩ := hS.add hA (κ := NM R FL (ch := ch))
-    (fun ν x => alvN R ch FL (ox x) ν (Nf x ν.1)) (a := 3) (e := 1) (by simpa using hB.nm)
+    (fun ν x => alvN R ch FL (ox x) ν (Nf x ν.1)) (a := 3) (e := 1) (by rw [pow_one]; exact hB.nm)
     (fun ν => cy_alvN hA hB hR hs hN ν) (by omega)
   obtain ⟨H2, s2, u2, f2⟩ := s1.add hA (κ := Tg T m AA)
-    (fun τ x => ld R ch FL lhat (nx x) (ox x) (Nf x) τ) (a := 3) (e := 1) (by simpa using hB.tg)
+    (fun τ x => ld R ch FL lhat (nx x) (ox x) (Nf x) τ) (a := 3) (e := 1) (by rw [pow_one]; exact hB.tg)
     (fun τ => cy_ld hA hB hR (hs.weaken u1) f1 τ) (by omega)
   exact ⟨H2, s2, u1.trans u2, fun ν => u2 (f1 ν), f2⟩
 
